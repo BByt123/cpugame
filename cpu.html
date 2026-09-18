@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>植物大戰殭屍 - 每5關解鎖等級上限版</title>
+    <title>植物大戰殭屍 - 初始上限 Lv.3 版</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
@@ -64,7 +64,7 @@
                         <i data-lucide="sprout" class="w-5 h-5 text-emerald-400"></i>
                         植物大戰殭屍
                     </h1>
-                    <p class="text-xs text-slate-400">每 5 關植物等級上限 +1，第 5 關起怪物暴增！</p>
+                    <p class="text-xs text-slate-400">初始上限 Lv.3，通過第 5 關解鎖至 Lv.4！</p>
                 </div>
             </div>
 
@@ -75,7 +75,7 @@
                         <i data-lucide="flag" class="w-3.5 h-3.5"></i> 第 1 波殭屍
                     </span>
                     <span id="max-level-text" class="text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-500/40">
-                        ⭐ 當前上限: Lv.1
+                        ⭐ 當前上限: Lv.3
                     </span>
                     <span id="zombie-left-text" class="text-slate-400">剩餘殭屍: 0</span>
                 </div>
@@ -86,7 +86,6 @@
 
             <!-- 功能控制按鈕 -->
             <div class="flex items-center gap-1.5 sm:gap-2">
-                <!-- 新增：規則說明按鈕 -->
                 <button id="btn-rules" title="規則說明" class="p-2 bg-indigo-900/80 hover:bg-indigo-800 border border-indigo-600/80 rounded-xl transition active:scale-95 text-indigo-200 flex items-center gap-1 shadow">
                     <i data-lucide="book-open" class="w-5 h-5"></i>
                     <span class="text-xs font-bold hidden sm:inline">規則說明</span>
@@ -148,7 +147,7 @@
                 <span class="ml-4">最高紀錄: <strong id="high-score-count" class="text-emerald-400 text-sm">0</strong></span>
             </div>
             <div>
-                💡 動態限制：<strong>每過 5 關，植物等級上限 +1</strong>；第 5 關起每關怪物增加 <strong>+2~5 隻</strong>！
+                💡 動態限制：<strong>起始等級上限為 Lv.3，通過第 5 關解鎖至 Lv.4</strong>！
             </div>
         </div>
     </footer>
@@ -162,8 +161,8 @@
 
             <h2 id="modal-title" class="text-3xl font-extrabold text-white mb-2">植物大戰殭屍</h2>
             <p id="modal-desc" class="text-sm text-slate-300 mb-6 leading-relaxed">
-                【動態上限】**每過 5 關，植物可升級的最高星級上限 +1**！<br>
-                【關卡難度】從 **第 5 關** 起，每關怪物數量隨機額外增加 **2~5 隻**！
+                【等級上限】起始最高可升級至 **Lv.3**！<br>
+                【關卡突破】通過第 5 關 Boss 後，可進一步提升至 **Lv.4**！
             </p>
 
             <button id="btn-modal-action" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-lg rounded-2xl shadow-lg transition active:scale-95 flex items-center justify-center gap-2">
@@ -173,7 +172,7 @@
         </div>
     </div>
 
-    <!-- 新增：規則說明彈窗 Modal -->
+    <!-- 規則說明彈窗 Modal -->
     <div id="rules-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
         <div class="bg-slate-900 border-2 border-indigo-500/50 rounded-3xl p-6 max-w-lg w-full shadow-2xl text-left relative overflow-hidden max-h-[85vh] flex flex-col">
             <div class="flex justify-between items-center pb-3 border-b border-slate-800 mb-4">
@@ -192,11 +191,10 @@
                         <i data-lucide="star" class="w-4 h-4"></i> 動態植物升級機制
                     </h4>
                     <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
-                        <li><strong>等級上限解鎖：</strong>第 1~4 關上限為 Lv.1；第 5~9 關上限為 Lv.2 ... **每過 5 關上限 +1**。</li>
+                        <li><strong>等級上限：</strong>第 1~5 關上限為 <strong>Lv.3</strong>；通過第 5 關後升至 <strong>Lv.4</strong>（之後每過 5 關上限 +1）。</li>
                         <li><strong>重疊升級：</strong>將相同植物種植在已有植物上可消耗陽光進行升級。</li>
-                        <li><strong>屬性倍率：</strong>每次升級，植物的攻擊力與血量上限提升 **1.5 倍** 並立即補滿血量。</li>
+                        <li><strong>屬性倍率：</strong>每次升級，植物的攻擊力與血量上限提升 <strong>1.5 倍</strong> 並立即補滿血量。</li>
                         <li><strong>向日葵加速：</strong>等級越高，生產陽光的間隔時間越短。</li>
-                        <li><strong>限制保護：</strong>達到關卡上限時，嘗試升級不會消耗陽光與觸發冷卻。</li>
                     </ul>
                 </div>
 
@@ -205,20 +203,8 @@
                         <i data-lucide="swords" class="w-4 h-4"></i> 關卡與怪物暴增規則
                     </h4>
                     <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
-                        <li><strong>怪物數量增加：</strong>從 **第 5 關** 起，每關怪獸數量額外增加 **2~5 隻**。</li>
-                        <li><strong>Boss 來襲：</strong>每 5 關（第 5, 10, 15...關）會有 **巨型 Boss 殭屍** 降臨，佔用雙軌道且擁有極高血量。</li>
-                        <li><strong>防禦屬性：</strong>隨關卡推進，殭屍的血量、移動速度與防禦力會逐漸提升。</li>
-                    </ul>
-                </div>
-
-                <div class="bg-slate-800/60 p-3 rounded-2xl border border-slate-700">
-                    <h4 class="font-bold text-teal-400 mb-1 flex items-center gap-1">
-                        <i data-lucide="gamepad-2" class="w-4 h-4"></i> 操作指引
-                    </h4>
-                    <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
-                        <li>點擊上方卡片選擇植物，再點擊草地進行種植。</li>
-                        <li>點擊「剷子」後再點擊植物可將其剷除。</li>
-                        <li>點擊掉落或向日葵產出的陽光可手動收集（逾時自動收集）。</li>
+                        <li><strong>怪物數量：</strong>從第 5 關起，每關怪獸數量額外增加 2~5 隻。</li>
+                        <li><strong>Boss 來襲：</strong>每 5 關（第 5, 10, 15...關）會有巨型 Boss 殭屍降臨。</li>
                     </ul>
                 </div>
             </div>
@@ -232,7 +218,6 @@
     </div>
 
     <script>
-        // Web Audio API 音效生成器
         class SoundManager {
             constructor() {
                 this.ctx = null;
@@ -356,50 +341,15 @@
         const COLS = 9;
         const CANVAS_WIDTH = 900;
         const CANVAS_HEIGHT = 500;
-        const CELL_WIDTH = CANVAS_WIDTH / COLS;   // 100px
-        const CELL_HEIGHT = CANVAS_HEIGHT / ROWS; // 100px
+        const CELL_WIDTH = CANVAS_WIDTH / COLS;
+        const CELL_HEIGHT = CANVAS_HEIGHT / ROWS;
 
         const PLANT_TYPES = {
-            sunflower: {
-                name: '向日葵',
-                cost: 50,
-                hp: 150,
-                cooldown: 5,
-                color: '#f59e0b',
-                desc: '重疊縮短產光時間'
-            },
-            peashooter: {
-                name: '豌豆射手',
-                cost: 100,
-                hp: 180,
-                cooldown: 6,
-                color: '#10b981',
-                desc: '重疊增強攻擊與血量'
-            },
-            wallnut: {
-                name: '堅果牆',
-                cost: 50,
-                hp: 800,
-                cooldown: 12,
-                color: '#d97706',
-                desc: '重疊大幅提升血量'
-            },
-            cherrybomb: {
-                name: '櫻桃炸彈',
-                cost: 150,
-                hp: 300,
-                cooldown: 18,
-                color: '#ef4444',
-                desc: '種植後爆炸毀務 3x3 區域'
-            },
-            repeater: {
-                name: '雙發射手',
-                cost: 200,
-                hp: 180,
-                cooldown: 8,
-                color: '#0d9488',
-                desc: '重疊提升雙發威力'
-            }
+            sunflower: { name: '向日葵', cost: 50, hp: 150, cooldown: 5, color: '#f59e0b', desc: '重疊縮短產光時間' },
+            peashooter: { name: '豌豆射手', cost: 100, hp: 180, cooldown: 6, color: '#10b981', desc: '重疊增強攻擊與血量' },
+            wallnut: { name: '堅果牆', cost: 50, hp: 800, cooldown: 12, color: '#d97706', desc: '重疊大幅提升血量' },
+            cherrybomb: { name: '櫻桃炸彈', cost: 150, hp: 300, cooldown: 18, color: '#ef4444', desc: '種植後爆炸毀務 3x3 區域' },
+            repeater: { name: '雙發射手', cost: 200, hp: 180, cooldown: 8, color: '#0d9488', desc: '重疊提升雙發威力' }
         };
 
         const ZOMBIE_TYPES = {
@@ -436,13 +386,7 @@
                 this.particles = [];
                 this.explosions = [];
 
-                this.cooldowns = {
-                    sunflower: 0,
-                    peashooter: 0,
-                    wallnut: 0,
-                    cherrybomb: 0,
-                    repeater: 0
-                };
+                this.cooldowns = { sunflower: 0, peashooter: 0, wallnut: 0, cherrybomb: 0, repeater: 0 };
 
                 this.currentWave = 1;
                 this.totalWaves = 50;
@@ -458,9 +402,9 @@
                 this.bindEvents();
             }
 
-            // 計算當前關卡允許的最高星級上限（每 5 關 +1）
+            // 修改：起步上限為 3，過完第 5 關（第 6 關起）提升至 4
             getMaxAllowedLevel() {
-                return Math.floor((this.currentWave - 1) / 5) + 1;
+                return 3 + Math.floor((this.currentWave - 1) / 5);
             }
 
             initDOM() {
@@ -551,7 +495,6 @@
 
                 this.canvas.addEventListener('click', handleCanvasClick);
 
-                // 規則說明 Modal 控制綁定
                 this.btnRules.addEventListener('click', () => {
                     this.rulesModal.classList.remove('hidden');
                 });
@@ -634,20 +577,18 @@
                     const info = PLANT_TYPES[this.selectedPlant];
                     if (this.sun < info.cost) return;
 
-                    // 同款植物重疊升級機制
                     if (existingIdx !== -1) {
                         const existingPlant = this.plants[existingIdx];
                         if (existingPlant.type === this.selectedPlant) {
                             
                             const maxLevel = this.getMaxAllowedLevel();
 
-                            // 檢查是否達到【每 5 關計算一次】的動態星級上限
                             if (existingPlant.level >= maxLevel) {
                                 sound.play('max');
                                 this.particles.push({
                                     x: (c + 0.5) * CELL_WIDTH,
                                     y: (r + 0.5) * CELL_HEIGHT,
-                                    text: `第 ${this.currentWave} 關上限 Lv.${maxLevel}！`,
+                                    text: `當前關卡上限 Lv.${maxLevel}！`,
                                     color: '#ef4444',
                                     opacity: 1,
                                     vy: -35
@@ -657,19 +598,15 @@
                                 return;
                             }
 
-                            // 扣除陽光並進入冷卻
                             this.sun -= info.cost;
                             this.cooldowns[this.selectedPlant] = info.cooldown;
 
-                            // 等級 +1，基礎屬性乘以 1.5
                             existingPlant.level += 1;
                             existingPlant.multiplier *= 1.5;
 
-                            // 血量與上限提升 1.5 倍並補滿
                             existingPlant.maxHp = Math.round(info.hp * existingPlant.multiplier);
                             existingPlant.hp = existingPlant.maxHp;
 
-                            // 特效與音效
                             sound.play('upgrade');
                             this.particles.push({
                                 x: (c + 0.5) * CELL_WIDTH,
@@ -684,12 +621,10 @@
                             this.updateUI();
                             return;
                         } else {
-                            // 格子上已有不同款植物
                             return;
                         }
                     }
 
-                    // 空格上新建植物
                     this.sun -= info.cost;
                     this.cooldowns[this.selectedPlant] = info.cooldown;
 
@@ -776,12 +711,10 @@
             setupWave(waveNum) {
                 this.currentWave = waveNum;
                 
-                // 基礎怪物數量計算
                 let baseCount = 3 + waveNum * 2;
 
-                // 從第 5 關（Wave 5）開始，每一關怪物額線增加 2 至 5 隻
                 if (waveNum >= 5) {
-                    const extraZombies = Math.floor(Math.random() * 4) + 2; // 隨機 +2, 3, 4, 5 隻
+                    const extraZombies = Math.floor(Math.random() * 4) + 2;
                     baseCount += extraZombies;
                 }
 
@@ -840,7 +773,6 @@
                     this.spawnSun(rx, ry, true);
                 }
 
-                // 更新植物狀態
                 this.plants.forEach(p => {
                     p.timer += dt;
 
@@ -849,7 +781,6 @@
                     }
 
                     if (p.type === 'sunflower') {
-                        // 靜默植物升級：等級越高，產陽光間隔越短
                         const produceInterval = Math.max(4, 24 / p.multiplier);
                         if (p.timer >= produceInterval) {
                             p.timer = 0;
@@ -895,7 +826,6 @@
 
                 this.suns = this.suns.filter(s => !(s.isCollecting && (Math.hypot(s.x - s.targetX, s.y - s.targetY) < 15 || s.progress >= 1)));
 
-                // 豌豆傷害計算
                 this.peas.forEach(pea => {
                     pea.x += dt * 280;
 
@@ -913,7 +843,6 @@
                 });
                 this.peas = this.peas.filter(p => !p.destroyed && p.x < CANVAS_WIDTH);
 
-                // 殭屍生成邏輯
                 if (this.zombiesSpawnedInWave < this.zombiesToSpawnInWave) {
                     this.waveSpawnTimer += dt;
                     const spawnInterval = Math.max(0.6, 4.0 - this.currentWave * 0.08);
@@ -923,7 +852,6 @@
                     }
                 }
 
-                // 殭屍移動與攻擊
                 this.zombies.forEach(z => {
                     const zCol = Math.floor((z.x - 10) / CELL_WIDTH);
 
@@ -950,7 +878,6 @@
                     }
                 });
 
-                // 死亡殭屍結算
                 this.zombies = this.zombies.filter(z => {
                     if (z.hp <= 0) {
                         this.score += z.score;
@@ -975,7 +902,6 @@
                 });
                 this.explosions = this.explosions.filter(e => e.opacity > 0);
 
-                // 波次推進
                 if (this.zombiesSpawnedInWave >= this.zombiesToSpawnInWave && this.zombies.length === 0) {
                     if (this.currentWave < this.totalWaves) {
                         this.setupWave(this.currentWave + 1);
@@ -1109,7 +1035,6 @@
             draw() {
                 this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-                // 繪製草地棋盤
                 for (let r = 0; r < ROWS; r++) {
                     for (let c = 0; c < COLS; c++) {
                         const isEven = (r + c) % 2 === 0;
@@ -1122,11 +1047,9 @@
                     }
                 }
 
-                // 防線紅線
                 this.ctx.fillStyle = 'rgba(220, 38, 38, 0.7)';
                 this.ctx.fillRect(0, 0, 8, CANVAS_HEIGHT);
 
-                // 繪製植物
                 this.plants.forEach(p => {
                     const info = PLANT_TYPES[p.type];
                     const cx = (p.col + 0.5) * CELL_WIDTH;
@@ -1134,7 +1057,6 @@
 
                     this.ctx.save();
 
-                    // 植物產光特效
                     if (p.sunGlowTimer > 0) {
                         this.ctx.beginPath();
                         this.ctx.arc(cx, cy, 38, 0, Math.PI * 2);
@@ -1142,7 +1064,6 @@
                         this.ctx.fill();
                     }
 
-                    // 植物主體
                     this.ctx.beginPath();
                     this.ctx.arc(cx, cy, 28, 0, Math.PI * 2);
                     this.ctx.fillStyle = info.color;
@@ -1151,7 +1072,6 @@
                     this.ctx.strokeStyle = p.level > 1 ? '#fbbf24' : '#ffffff';
                     this.ctx.stroke();
 
-                    // 植物圖示
                     this.ctx.fillStyle = '#ffffff';
                     this.ctx.font = 'bold 16px Noto Sans TC';
                     this.ctx.textAlign = 'center';
@@ -1159,14 +1079,12 @@
                     const iconName = p.type === 'sunflower' ? '🌻' : p.type === 'wallnut' ? '🌰' : p.type === 'cherrybomb' ? '🍒' : '🌱';
                     this.ctx.fillText(iconName, cx, cy);
 
-                    // 繪製等級標籤
                     if (p.level > 1) {
                         this.ctx.fillStyle = '#f59e0b';
                         this.ctx.font = 'black 12px Noto Sans TC';
                         this.ctx.fillText(`⭐ Lv.${p.level}`, cx, cy - 32);
                     }
 
-                    // 植物血條
                     if (p.hp < p.maxHp) {
                         const hpPct = Math.max(0, p.hp / p.maxHp);
                         this.ctx.fillStyle = 'rgba(0,0,0,0.6)';
@@ -1178,7 +1096,6 @@
                     this.ctx.restore();
                 });
 
-                // 繪製殭屍
                 this.zombies.forEach(z => {
                     const zInfo = ZOMBIE_TYPES[z.type];
 
@@ -1242,7 +1159,6 @@
                     this.ctx.restore();
                 });
 
-                // 繪製豌豆
                 this.peas.forEach(pea => {
                     const cy = (pea.row + 0.5) * CELL_HEIGHT;
                     this.ctx.beginPath();
@@ -1254,7 +1170,6 @@
                     this.ctx.stroke();
                 });
 
-                // 繪製陽光
                 this.suns.forEach(s => {
                     this.ctx.save();
 
@@ -1280,7 +1195,6 @@
                     this.ctx.restore();
                 });
 
-                // 繪製爆炸
                 this.explosions.forEach(e => {
                     this.ctx.save();
                     this.ctx.beginPath();
@@ -1290,7 +1204,6 @@
                     this.ctx.restore();
                 });
 
-                // 繪製文字特效
                 this.particles.forEach(p => {
                     this.ctx.save();
                     this.ctx.font = 'black 16px Noto Sans TC';
