@@ -64,7 +64,7 @@
                         <i data-lucide="sprout" class="w-5 h-5 text-emerald-400"></i>
                         植物大戰殭屍
                     </h1>
-                    <p class="text-xs text-slate-400">初始上限 Lv.3，通過第 5 關解鎖至 Lv.4！</p>
+                    <p class="text-xs text-slate-400">前 5 關怪獸零加成 | 通過第 5 關解鎖上限 Lv.4！</p>
                 </div>
             </div>
 
@@ -147,7 +147,7 @@
                 <span class="ml-4">最高紀錄: <strong id="high-score-count" class="text-emerald-400 text-sm">0</strong></span>
             </div>
             <div>
-                💡 動態限制：<strong>起始等級上限為 Lv.3，通過第 5 關解鎖至 Lv.4</strong>！
+                💡 動態限制：<strong>前 5 關怪獸無數值加成，起始等級上限 Lv.3，過 5 關解鎖 Lv.4</strong>！
             </div>
         </div>
     </footer>
@@ -161,8 +161,8 @@
 
             <h2 id="modal-title" class="text-3xl font-extrabold text-white mb-2">植物大戰殭屍</h2>
             <p id="modal-desc" class="text-sm text-slate-300 mb-6 leading-relaxed">
-                【等級上限】起始最高可升級至 **Lv.3**！<br>
-                【關卡突破】通過第 5 關 Boss 後，可進一步提升至 **Lv.4**！
+                【怪獸數值】前 5 關怪獸**無任何數值加成**，平穩過渡！<br>
+                【等級上限】起始最高可升級至 **Lv.3**，通過第 5 關後升至 **Lv.4**！
             </p>
 
             <button id="btn-modal-action" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-lg rounded-2xl shadow-lg transition active:scale-95 flex items-center justify-center gap-2">
@@ -194,7 +194,6 @@
                         <li><strong>等級上限：</strong>第 1~5 關上限為 <strong>Lv.3</strong>；通過第 5 關後升至 <strong>Lv.4</strong>（之後每過 5 關上限 +1）。</li>
                         <li><strong>重疊升級：</strong>將相同植物種植在已有植物上可消耗陽光進行升級。</li>
                         <li><strong>屬性倍率：</strong>每次升級，植物的攻擊力與血量上限提升 <strong>1.5 倍</strong> 並立即補滿血量。</li>
-                        <li><strong>向日葵加速：</strong>等級越高，生產陽光的間隔時間越短。</li>
                     </ul>
                 </div>
 
@@ -203,7 +202,8 @@
                         <i data-lucide="swords" class="w-4 h-4"></i> 關卡與怪物暴增規則
                     </h4>
                     <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
-                        <li><strong>怪物數量：</strong>從第 5 關起，每關怪獸數量額外增加 2~5 隻。</li>
+                        <li><strong>前 5 關保護：</strong>第 1~5 關怪獸<strong>無數值加成</strong>（基礎面板）。</li>
+                        <li><strong>第 6 關起強化：</strong>從第 6 關開始，怪獸每關才會獲得額外攻擊、防禦與移動速度成長。</li>
                         <li><strong>Boss 來襲：</strong>每 5 關（第 5, 10, 15...關）會有巨型 Boss 殭屍降臨。</li>
                     </ul>
                 </div>
@@ -402,7 +402,6 @@
                 this.bindEvents();
             }
 
-            // 修改：起步上限為 3，過完第 5 關（第 6 關起）提升至 4
             getMaxAllowedLevel() {
                 return 3 + Math.floor((this.currentWave - 1) / 5);
             }
@@ -964,11 +963,13 @@
 
             spawnZombie() {
                 const isBossWave = (this.currentWave % 5 === 0);
-                const waveIndex = this.currentWave - 1;
+                
+                // 修改：前 5 關無每關屬性加成，從第 6 關起才開始計算成長（effectiveWave）
+                const effectiveWave = Math.max(0, this.currentWave - 5);
 
-                const atkMultiplier = 1 + (waveIndex * 0.15);
-                const waveDef = waveIndex * 15;
-                const speedMultiplier = 1 + (waveIndex * 0.03);
+                const atkMultiplier = 1 + (effectiveWave * 0.15);
+                const waveDef = effectiveWave * 15;
+                const speedMultiplier = 1 + (effectiveWave * 0.03);
 
                 if (isBossWave && !this.bossSpawnedThisWave) {
                     this.bossSpawnedThisWave = true;
@@ -986,7 +987,7 @@
                         def: waveDef,
                         speed: zInfo.speed * speedMultiplier,
                         atk: zInfo.atk * atkMultiplier,
-                        score: zInfo.score + waveIndex * 20,
+                        score: zInfo.score + (this.currentWave - 1) * 20,
                         isEating: false
                     });
 
