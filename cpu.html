@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>植物大戰殭屍 - 初始上限 Lv.3 版</title>
+    <title>植物大戰殭屍 - 初始上限 Lv.5 版</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
@@ -64,7 +64,7 @@
                         <i data-lucide="sprout" class="w-5 h-5 text-emerald-400"></i>
                         植物大戰殭屍
                     </h1>
-                    <p class="text-xs text-slate-400">前 5 關怪獸零加成 | 通過第 5 關解鎖上限 Lv.4！</p>
+                    <p class="text-xs text-slate-400">前 5 關怪獸零加成 | 每過 1 關植物等級上限 +1！</p>
                 </div>
             </div>
 
@@ -75,7 +75,7 @@
                         <i data-lucide="flag" class="w-3.5 h-3.5"></i> 第 1 波殭屍
                     </span>
                     <span id="max-level-text" class="text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-500/40">
-                        ⭐ 當前上限: Lv.3
+                        ⭐ 當前上限: Lv.5
                     </span>
                     <span id="zombie-left-text" class="text-slate-400">剩餘殭屍: 0</span>
                 </div>
@@ -147,7 +147,7 @@
                 <span class="ml-4">最高紀錄: <strong id="high-score-count" class="text-emerald-400 text-sm">0</strong></span>
             </div>
             <div>
-                💡 動態限制：<strong>前 5 關怪獸無數值加成，起始等級上限 Lv.3，過 5 關解鎖 Lv.4</strong>！
+                💡 動態限制：<strong>前 5 關怪獸無數值加成，起始等級上限 Lv.5，每關 +1 上限</strong>！
             </div>
         </div>
     </footer>
@@ -161,8 +161,8 @@
 
             <h2 id="modal-title" class="text-3xl font-extrabold text-white mb-2">植物大戰殭屍</h2>
             <p id="modal-desc" class="text-sm text-slate-300 mb-6 leading-relaxed">
-                【怪獸數值】前 5 關怪獸**無任何數值加成**，平穩過渡！<br>
-                【等級上限】起始最高可升級至 **Lv.3**，通過第 5 關後升至 **Lv.4**！
+                【等級上限】起始最高可升級至 **Lv.5**，每過 1 關上限增加 1！<br>
+                【怪獸數值】前 5 關怪獸**無任何數值加成**，第 6 關起開始成長！
             </p>
 
             <button id="btn-modal-action" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-lg rounded-2xl shadow-lg transition active:scale-95 flex items-center justify-center gap-2">
@@ -191,7 +191,7 @@
                         <i data-lucide="star" class="w-4 h-4"></i> 動態植物升級機制
                     </h4>
                     <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
-                        <li><strong>等級上限：</strong>第 1~5 關上限為 <strong>Lv.3</strong>；通過第 5 關後升至 <strong>Lv.4</strong>（之後每過 5 關上限 +1）。</li>
+                        <li><strong>等級上限：</strong>第 1 關上限為 <strong>Lv.5</strong>，之後<strong>每一關上限 +1</strong>（第 2 關 Lv.6、第 3 關 Lv.7...）。</li>
                         <li><strong>重疊升級：</strong>將相同植物種植在已有植物上可消耗陽光進行升級。</li>
                         <li><strong>屬性倍率：</strong>每次升級，植物的攻擊力與血量上限提升 <strong>1.5 倍</strong> 並立即補滿血量。</li>
                     </ul>
@@ -402,8 +402,9 @@
                 this.bindEvents();
             }
 
+            // 修改：起初等級上限為 5，每一關加 1
             getMaxAllowedLevel() {
-                return 3 + Math.floor((this.currentWave - 1) / 5);
+                return 5 + (this.currentWave - 1);
             }
 
             initDOM() {
@@ -728,7 +729,7 @@
                 this.updateWaveProgress();
 
                 if (isBossWave) {
-                    this.showBanner(`⚠️ 第 ${waveNum} 波 Boss 降臨！星級上限提升至 Lv.${this.getMaxAllowedLevel()}！ ⚠️`);
+                    this.showBanner(`⚠️ 第 ${waveNum} 波 Boss 降臨！等級上限提升至 Lv.${this.getMaxAllowedLevel()}！ ⚠️`);
                 } else if (waveNum % 10 === 0 || waveNum === this.totalWaves) {
                     this.showBanner(`⚠️ 一大波殭屍正在接近！ ⚠️`);
                 }
@@ -964,7 +965,7 @@
             spawnZombie() {
                 const isBossWave = (this.currentWave % 5 === 0);
                 
-                // 修改：前 5 關無每關屬性加成，從第 6 關起才開始計算成長（effectiveWave）
+                // 前 5 關無屬性加成，第 6 關起才計算成長
                 const effectiveWave = Math.max(0, this.currentWave - 5);
 
                 const atkMultiplier = 1 + (effectiveWave * 0.15);
